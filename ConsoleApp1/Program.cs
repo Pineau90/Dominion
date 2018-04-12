@@ -21,7 +21,7 @@ namespace Dominion
         // Method
         public string Stack()
         {
-            return "Hi";
+            return "His";
         }
 
 
