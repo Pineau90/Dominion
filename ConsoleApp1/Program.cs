@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Dominion
 {
@@ -6,29 +8,36 @@ namespace Dominion
     {
         static void Main(string[] args)
         {
-            Gameboard gameboard = new Gameboard();
+            List<string> KingdomCards = new List<string>();
 
-            Console.WriteLine(gameboard.Name);
+            KingdomCards.BasicCards();
+            KingdomCards.ShuffleCards();
+            KingdomCards = KingdomCards.GetRange(0, 10);
+
+            foreach (string card in KingdomCards)
+            {
+                Console.WriteLine(card);
+            }
             Console.ReadKey();
         }
     }
 
-    public class Gameboard
+    public class Stack
     {
         // Properties
         public string Name { get; set; }
-
+        public List<string> Cards { get; set; }
+        
         // Method
-        public string Stack()
+        public List<string> AddCardsToStack()
         {
-            return "Hi";
+            return Cards;
         }
 
-
         // Instance constructor
-        public Gameboard()
+        public Stack(string name)
         {
-            Name = "Gameboard";
+            Name = name;
         }
     }
 }
