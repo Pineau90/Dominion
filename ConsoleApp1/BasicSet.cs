@@ -43,5 +43,35 @@ namespace Dominion
 
             return Cards;
         }
+
+        public static int CardsAmount(this string Card)
+        {
+            int i;
+            if (Card == "Gardens" | Card == "Estate" | Card == "Duchy" | Card == "Province")
+            {
+                i = 8;
+                return i;
+            }
+            else if (Card == "Copper")
+            {
+                i = 60;
+                return i;
+            }
+            else if (Card == "Silver")
+            {
+                i = 40;
+                return i;
+            }
+            else if (Card == "Gold")
+            {
+                i = 30;
+                return i;
+            }
+            else
+            {
+                i = 10;
+                return i;
+            }
+        }
     }
 }

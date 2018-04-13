@@ -14,11 +14,22 @@ namespace Dominion
             KingdomCards.ShuffleCards();
             KingdomCards = KingdomCards.GetRange(0, 10);
 
-            foreach (string card in KingdomCards)
+            int i = 1;
+            foreach (string Card in KingdomCards)
             {
-                Console.WriteLine(card);
+                Stack stack = new Stack("Stack" + i);
+                stack.AddCardsToStack(Card);
+                i++;
             }
-            Console.ReadKey();
+            
+            foreach (string Card in KingdomCards)
+            {
+                if (Card == "Witch")
+                {
+                    Stack Curse = new Stack("Curse");
+                    Curse.AddCardsToStack(Card);
+                }
+            }
         }
     }
 
@@ -29,8 +40,15 @@ namespace Dominion
         public List<string> Cards { get; set; }
         
         // Method
-        public List<string> AddCardsToStack()
+        public List<string> AddCardsToStack(string Card)
         {
+            int i = BasicSet.CardsAmount(Card);
+            
+            for (int j = 1; j <= i; j++)
+            {
+                Cards.Add(Card);
+            }
+            
             return Cards;
         }
 
@@ -38,6 +56,7 @@ namespace Dominion
         public Stack(string name)
         {
             Name = name;
+            Cards = new List<string>();
         }
     }
 }
