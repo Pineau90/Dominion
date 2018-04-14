@@ -54,7 +54,7 @@ namespace Dominion
             }
             else if (Card == "Copper")
             {
-                i = 60;
+                i = 46;
                 return i;
             }
             else if (Card == "Silver")
