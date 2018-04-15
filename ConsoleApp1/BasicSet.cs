@@ -67,6 +67,11 @@ namespace Dominion
                 i = 30;
                 return i;
             }
+            else if (Card == "Trash")
+            {
+                i = 0;
+                return i;
+            }
             else
             {
                 i = 10;

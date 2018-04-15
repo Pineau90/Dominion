@@ -8,26 +8,27 @@ namespace Dominion
     {
         // Properties
         public List<string> Cards { get; set; }
-        public string Name { get; set; }
-
+        
         // Method
-        public List<string> AddCardsToStack(string Card)
+        public List<string> AddCards(string Card)
         {
             int i = BasicSet.CardsAmount(Card);
-
-            for (int j = 1; j <= i; j++)
+            List<string> cards = new List<string>();
+            if (i != 0)
             {
-                Cards.Add(Card);
+                for (int j = 1; j <= i; j++)
+                {
+                    cards.Add(Card);
+                }
             }
-
-            return Cards;
+            return cards;
         }
                 
         // Instance constructor
-        public Stack(String name)
+        public Stack(string Card)
         {
             Cards = new List<string>();
-            Name = name;
+            Cards = AddCards(Card);
         }
     }
 }

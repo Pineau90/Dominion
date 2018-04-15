@@ -5,7 +5,7 @@ using System.Text;
 namespace Dominion
 {
     public class Player
-    {
+    {         
         // Properties
         public string Name { get; set; }
         public List<string> Hand { get; set; }
@@ -15,16 +15,17 @@ namespace Dominion
         public int VictoryPoints { get; set; }
 
         // Method
-        public void StartHand()
+        public void StartDeck()
         {
             for (int i = 1; i <= 7; i++)
             {
-                Hand.Add("Copper");
+                DrawPile.Add("Copper");
             }
             for (int i = 1; i <= 3; i++)
             {
-                Hand.Add("Estate");
+                DrawPile.Add("Estate");
             }
+            DrawPile.ShuffleCards();
         }
 
         // Instance constructor
