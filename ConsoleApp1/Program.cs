@@ -6,21 +6,31 @@ using System.Linq;
 namespace Dominion
 {
     class Program
-    {        
+    {   
         static void Main(string[] args)
         {
+            // Set 10 cards to play with
             List<string> Cards = KingdomCards.GetCards();
-            List<Stack> Stacks = Stack.Stacks(Cards);            
-            int NumOfPlayers = Player.SetNumPlayers();
+
+            // Set a list of stacks to play with
+            List<Stack> Stacks = Stack.Stacks(Cards);
+
+            // Calls the function to set the number of players
+            Player.SetNumPlayers();
+
+            // Creates the amount of players set before
             List<Player> Players = Player.SetPlayers();
 
-            Console.Clear();
-            foreach (Stack stack in Stacks)
+            // Plays the game
+            int i = 0;
+            do
             {
-                Console.WriteLine(stack.Cards.First() + ": " + stack.Cards.Count());
-            }
+                Console.WriteLine("{0}'s turn", Players[i].Name);
 
-            Console.ReadKey();            
+                i++;
+            } while (i <= Player.NumOfPlayers - 1);
+
+            Console.ReadKey();
         }
     }    
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Dominion
 {
@@ -37,7 +38,7 @@ namespace Dominion
         }
 
         // Method to set the number of players
-        public static int SetNumPlayers()
+        public static void SetNumPlayers()
         {
             Console.Write("Set number of players (2-4):");
             try
@@ -53,8 +54,6 @@ namespace Dominion
                 Console.WriteLine(ex.Message);
                 SetNumPlayers();
             }
-
-            return NumOfPlayers;
         }
 
         // Method to set the players
@@ -75,6 +74,11 @@ namespace Dominion
         {
             Console.Write("Enter a name for player{0}: ", PlayerNum);
             SetName = Convert.ToString(Console.ReadLine());
+            if (!Regex.IsMatch(SetName, @"^[\p{L}\p{M}' \.\-]+$"))
+            {
+                Console.WriteLine("Please enter a valid name");
+                SetPlayerName(PlayerNum);
+            }
 
             return SetName;
         }

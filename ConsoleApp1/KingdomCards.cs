@@ -13,7 +13,7 @@ namespace Dominion
             Cards.BasicCards();
             Cards.ShuffleCards();
             Cards = Cards.GetRange(0, 10);
-
+                        
             return Cards;
         }
     }
