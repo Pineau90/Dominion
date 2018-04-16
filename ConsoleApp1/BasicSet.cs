@@ -6,6 +6,20 @@ namespace Dominion
 {
     public static class BasicSet
     {
+        public static List<string> BasicStacks(this List<string> Cards)
+        {
+            Cards.Add("Copper");
+            Cards.Add("Silver");
+            Cards.Add("Gold");
+            Cards.Add("Estate");
+            Cards.Add("Duchy");
+            Cards.Add("Province");
+            Cards.Add("Curse");
+            Cards.Add("Trash");
+
+            return Cards;
+        }
+
         public static List<string> BasicCards(this List<string> Cards)
         {
             Cards.Add("Adventurer");
@@ -69,7 +83,7 @@ namespace Dominion
             }
             else if (Card == "Trash")
             {
-                i = 0;
+                i = 1;
                 return i;
             }
             else

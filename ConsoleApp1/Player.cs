@@ -5,30 +5,83 @@ using System.Text;
 namespace Dominion
 {
     public class Player
-    {         
+    {
         // Properties
+        public static int NumOfPlayers;
+        public static string SetName;
+
         public string Name { get; set; }
         public List<string> Hand { get; set; }
         public List<string> DrawPile { get; set; }
         public List<string> DiscardPile { get; set; }
         public List<string> InPlay { get; set; }
         public int VictoryPoints { get; set; }
-
-        // Method
-        public void StartDeck()
+                
+        // Method to set the cards in the 
+        public static List<string> StartDeck()
         {
+            List<string> Cards = new List<string>();
+
             for (int i = 1; i <= 7; i++)
             {
-                DrawPile.Add("Copper");
+                Cards.Add("Copper");
             }
+
             for (int i = 1; i <= 3; i++)
             {
-                DrawPile.Add("Estate");
+                Cards.Add("Estate");
             }
-            DrawPile.ShuffleCards();
+
+            Cards.ShuffleCards();
+            return Cards;
+        }
+
+        // Method to set the number of players
+        public static int SetNumPlayers()
+        {
+            Console.Write("Set number of players (2-4):");
+            try
+            {
+                NumOfPlayers = Convert.ToInt32(Console.ReadLine());
+                if (!(NumOfPlayers >= 2 && NumOfPlayers <= 4))
+                {
+                    throw new FormatException("Please enter a number between 2 and 4");
+                }
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+                SetNumPlayers();
+            }
+
+            return NumOfPlayers;
+        }
+
+        // Method to set the players
+        public static List<Player> SetPlayers()
+        {            
+            List<Player> Players = new List<Player>();
+
+            for (int i = 1; i <= NumOfPlayers; i++)
+            {
+                Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<string>(), DiscardPile = new List<string>(), InPlay = new List<string>(), VictoryPoints = 0 });
+            }
+            
+            return Players;
+        }
+
+        // Method to set the players name
+        public static string SetPlayerName(int PlayerNum)
+        {
+            Console.Write("Enter a name for player{0}: ", PlayerNum);
+            SetName = Convert.ToString(Console.ReadLine());
+
+            return SetName;
         }
 
         // Instance constructor
+        public Player() { }
+
         public Player(string name)
         {
             Name = name;

@@ -8,9 +8,24 @@ namespace Dominion
     {
         // Properties
         public List<string> Cards { get; set; }
-        
-        // Method
-        public List<string> AddCards(string Card)
+
+        // Method to create all stacks based on the cards in the list
+        public static List<Stack> Stacks(List<string> Cards)
+        {
+            Cards.BasicStacks();
+
+            List<Stack> Stacks = new List<Stack>();
+
+            foreach (string card in Cards)
+            {
+                Stacks.Add(new Stack { Cards = AddCards(card) });
+            }
+
+            return Stacks;
+        }
+
+        // Method to add cards to a stack based on the card as input
+        public static List<string> AddCards(string Card)
         {
             int i = BasicSet.CardsAmount(Card);
             List<string> cards = new List<string>();
@@ -23,11 +38,12 @@ namespace Dominion
             }
             return cards;
         }
-                
+
         // Instance constructor
+        public Stack() { }
+
         public Stack(string Card)
         {
-            Cards = new List<string>();
             Cards = AddCards(Card);
         }
     }
