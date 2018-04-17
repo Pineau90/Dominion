@@ -18,7 +18,7 @@ namespace Dominion
         public List<string> InPlay { get; set; }
         public int VictoryPoints { get; set; }
                 
-        // Method to set the cards in the 
+        // Method to set the cards in the startdeck
         public static List<string> StartDeck()
         {
             List<string> Cards = new List<string>();
