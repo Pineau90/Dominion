@@ -19,9 +19,9 @@ namespace Dominion
                 while (!(box[0] < n * (Byte.MaxValue / n)));
                 int k = (box[0] % n);
                 n--;
-                string value = Cards[k].Name;
+                Card value = Cards[k];
                 Cards[k] = Cards[n];
-                Cards[n].Name = value;
+                Cards[n] = value;
             }
             return Cards;
         }        

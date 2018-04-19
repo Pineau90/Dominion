@@ -7,7 +7,7 @@ namespace Dominion
     public class Stack
     {
         // Properties
-        public List<string> Cards { get; set; }
+        public List<Card> Cards { get; set; }
 
         // Method to create all stacks based on the cards in the list
         public static List<Stack> Stacks(List<Card> Cards)
@@ -27,24 +27,79 @@ namespace Dominion
         // Method to add cards to a stack based on the card as input
         public static List<Card> AddCards(Card Card)
         {
-            int i = BasicSet.CardsAmount(Card);
-            List<string> cards = new List<string>();
-            if (i != 0)
+            List<Card> Cards = new List<Card>();
+
+            if (Card.Type.Contains("Victory") && !Card.Type.Contains("Curse"))
             {
-                for (int j = 1; j <= i; j++)
+                switch (Player.NumOfPlayers)
                 {
-                    cards.Add(Card);
+                    case 2:
+                        Cards = AmountCards(Card, 8);
+                        break;
+                    case 3:
+                        Cards = AmountCards(Card, 10);
+                        break;
+                    case 4:
+                        Cards = AmountCards(Card, 12);
+                        break;
                 }
             }
-            return cards;
+            else if (Card.Type.Contains("Curse"))
+            {
+                switch (Player.NumOfPlayers)
+                {
+                    case 2:
+                        Cards = AmountCards(Card, 10);
+                        break;
+                    case 3:
+                        Cards = AmountCards(Card, 20);
+                        break;
+                    case 4:
+                        Cards = AmountCards(Card, 30);
+                        break;
+                }
+            }
+            else if (Card.Name.Contains("Copper") || Card.Name.Contains("Silver") || Card.Name.Contains("Gold"))
+            {
+                switch (Card.Name)
+                {
+                    case "Copper":
+                        Cards = AmountCards(Card, 60);
+                        break;
+                    case "Silver":
+                        Cards = AmountCards(Card, 40);
+                        break;
+                    case "Gold":
+                        Cards = AmountCards(Card, 30);
+                        break;
+                }
+            }
+            else if (Card.Name.Contains("Trash"))
+            {
+                Cards.Add(Card);
+            }
+            else
+            {
+                Cards = AmountCards(Card, 10);
+            }
+
+            return Cards;
+        }
+
+        // returns the amount of cards
+        public static List<Card> AmountCards(Card Card, int Amount)
+        {
+            List<Card> Cards = new List<Card>();
+
+            for (int i = 1; i <= Amount; i++)
+            {
+                Cards.Add(Card);
+            }
+
+            return Cards;
         }
 
         // Instance constructor
         public Stack() { }
-
-        public Stack(Card Card)
-        {
-            Cards = AddCards(Card);
-        }
     }
 }

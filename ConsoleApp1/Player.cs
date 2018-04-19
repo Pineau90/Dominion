@@ -12,25 +12,25 @@ namespace Dominion
         public static string SetName;
 
         public string Name { get; set; }
-        public List<string> Hand { get; set; }
-        public List<string> DrawPile { get; set; }
-        public List<string> DiscardPile { get; set; }
-        public List<string> InPlay { get; set; }
+        public List<Card> Hand { get; set; }
+        public List<Card> DrawPile { get; set; }
+        public List<Card> DiscardPile { get; set; }
+        public List<Card> InPlay { get; set; }
         public int VictoryPoints { get; set; }
                 
         // Method to set the cards in the startdeck
-        public static List<string> StartDeck()
+        public static List<Card> StartDeck()
         {
-            List<string> Cards = new List<string>();
+            List<Card> Cards = new List<Card>();
 
             for (int i = 1; i <= 7; i++)
             {
-                Cards.Add("Copper");
+                Cards.Add(new Card { Name = "Copper", Type = new List<string>(new string[]{ "Treasure" }), Price = 0, VicotryPoints = 0 });
             }
 
             for (int i = 1; i <= 3; i++)
             {
-                Cards.Add("Estate");
+                Cards.Add(new Card { Name = "Estate", Type = new List<string>(new string[]{ "Victory" }), Price = 2, VicotryPoints = 1 });
             }
 
             Cards.ShuffleCards();
@@ -63,7 +63,7 @@ namespace Dominion
 
             for (int i = 1; i <= NumOfPlayers; i++)
             {
-                Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<string>(), DiscardPile = new List<string>(), InPlay = new List<string>(), VictoryPoints = 0 });
+                Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<Card>(), DiscardPile = new List<Card>(), InPlay = new List<Card>(), VictoryPoints = 0 });
             }
             
             return Players;
@@ -85,15 +85,5 @@ namespace Dominion
 
         // Instance constructor
         public Player() { }
-
-        public Player(string name)
-        {
-            Name = name;
-            Hand = new List<string>();
-            DrawPile = new List<string>();
-            DiscardPile = new List<string>();
-            InPlay = new List<string>();
-            VictoryPoints = 0;
-        }
     }
 }
