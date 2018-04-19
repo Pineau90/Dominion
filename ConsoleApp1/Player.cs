@@ -52,8 +52,13 @@ namespace Dominion
             catch (FormatException ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine("Press a key to continue");
+                Console.ReadKey();
+                Console.Clear();
                 SetNumPlayers();
             }
+            System.Threading.Thread.Sleep(2000);
+            Console.Clear();
         }
 
         // Method to set the players
@@ -64,6 +69,9 @@ namespace Dominion
             for (int i = 1; i <= NumOfPlayers; i++)
             {
                 Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<Card>(), DiscardPile = new List<Card>(), InPlay = new List<Card>(), VictoryPoints = 0 });
+                Console.WriteLine("Creating player{0}: {1}...", i, Players[i-1].Name);
+                System.Threading.Thread.Sleep(2000);
+                Console.Clear();
             }
             
             return Players;
@@ -77,6 +85,9 @@ namespace Dominion
             if (!Regex.IsMatch(SetName, @"^[\p{L}\p{M}' \.\-]+$"))
             {
                 Console.WriteLine("Please enter a valid name");
+                Console.WriteLine("Press a key to continue");
+                Console.ReadKey();
+                Console.Clear();
                 SetPlayerName(PlayerNum);
             }
 

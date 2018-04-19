@@ -64,7 +64,18 @@ namespace Dominion
                 switch (Card.Name)
                 {
                     case "Copper":
-                        Cards = AmountCards(Card, 60);
+                        switch (Player.NumOfPlayers)
+                        {
+                            case 2:
+                                Cards = AmountCards(Card, 46);
+                                break;
+                            case 3:
+                                Cards = AmountCards(Card, 39);
+                                break;
+                            case 4:
+                                Cards = AmountCards(Card, 32);
+                                break;
+                        }                        
                         break;
                     case "Silver":
                         Cards = AmountCards(Card, 40);

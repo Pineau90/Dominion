@@ -19,7 +19,7 @@ namespace Dominion
             // Select 10 kingdom cards
             List<Card> Cards = Card.BasicKingdom();
             Cards.ShuffleCards();
-            Console.WriteLine("Shuffle Cards...");
+            Console.WriteLine("Shuffling cards...");
             System.Threading.Thread.Sleep(3000);
             Console.Clear();
 
@@ -32,12 +32,16 @@ namespace Dominion
             
             // Plays the game
             int i = 0;
+            int Turn = 1;
+
             do
             {
+                if (Turn == 1)
+                {
+                    Players.DrawCards(5, i, "Hand");
+                }
                 Console.Clear();
                 Console.WriteLine("{0}'s turn", Players[i].Name);
-                // Draw cards to hand and remove from drawpile
-                Players[i].Hand = Players[i].DrawPile.GetRange(0, 5);
 
                 // Action turn
                 Console.WriteLine();
@@ -47,6 +51,12 @@ namespace Dominion
                     Console.WriteLine(card.Name);
                 }
                 // Offer choice to play or not to play if applicable
+                Console.WriteLine();
+                Console.WriteLine("Cards in your drawpile");
+                foreach (Card card in Players[i].DrawPile)
+                {
+                    Console.WriteLine(card.Name);
+                }
                 Console.ReadKey();
                 i++;
             } while (i <= Player.NumOfPlayers - 1);
