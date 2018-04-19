@@ -8,7 +8,7 @@ namespace Dominion
 {
     public static class PublicFunctions
     {    
-        public static IList<string> ShuffleCards(this IList<string> Cards)
+        public static IList<Card> ShuffleCards(this IList<Card> Cards)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             int n = Cards.Count;
@@ -19,9 +19,9 @@ namespace Dominion
                 while (!(box[0] < n * (Byte.MaxValue / n)));
                 int k = (box[0] % n);
                 n--;
-                string value = Cards[k];
+                string value = Cards[k].Name;
                 Cards[k] = Cards[n];
-                Cards[n] = value;
+                Cards[n].Name = value;
             }
             return Cards;
         }        

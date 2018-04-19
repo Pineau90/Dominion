@@ -6,14 +6,13 @@ namespace Dominion
 {
     public class Card
     {
-        // Card name
+        // Properties
         public string Name { get; set; }
-        // Card types
         public List<string> Type { get; set; }
-        // Card price
         public int Price { get; set; }
-        // Card Victory points
         public int VicotryPoints { get; set; }
+
+        // Method to return amount of cards
 
         // Method to create BasicCards
         public static List<Card> BasicCards()
@@ -54,12 +53,23 @@ namespace Dominion
             Cards.Add(new Card { Name = "Merchant", Type = { "Action" }, Price = 3 });
             Cards.Add(new Card { Name = "Militia", Type = { "Action", "Attack" }, Price = 4 });
             Cards.Add(new Card { Name = "Mine", Type = { "Action" }, Price = 5 });
-
+            Cards.Add(new Card { Name = "Moat", Type = { "Action", "Reaction" }, Price = 2 });
+            Cards.Add(new Card { Name = "Moneylender", Type = { "Action" }, Price = 4 });
+            Cards.Add(new Card { Name = "Poacher", Type = { "Action" }, Price = 4 });
+            Cards.Add(new Card { Name = "Remodel", Type = { "Action" }, Price = 4 });
+            Cards.Add(new Card { Name = "Sentry", Type = { "Action" }, Price = 5 });
+            Cards.Add(new Card { Name = "Smithy", Type = { "Action" }, Price = 4 });
+            Cards.Add(new Card { Name = "Spy", Type = { "Action", "Attack" }, Price = 4 });
+            Cards.Add(new Card { Name = "Thief", Type = { "Action", "Attack" }, Price = 4 });
+            Cards.Add(new Card { Name = "Throne Room", Type = { "Action" }, Price = 4 });
+            Cards.Add(new Card { Name = "Vassal", Type = { "Action" }, Price = 3 });
+            Cards.Add(new Card { Name = "Village", Type = { "Action" }, Price = 3 });
+            Cards.Add(new Card { Name = "Witch", Type = { "Action", "Attack" }, Price = 5 });
+            Cards.Add(new Card { Name = "Woodcutter", Type = { "Action" }, Price = 3 });
+            Cards.Add(new Card { Name = "Workshop", Type = { "Action" }, Price = 3 });
+                      
             return Cards;
         }
-
-        // Method to create BasicKingdom
-        
         
         // Instance constructor
         public Card() { }

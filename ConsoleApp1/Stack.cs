@@ -10,13 +10,13 @@ namespace Dominion
         public List<string> Cards { get; set; }
 
         // Method to create all stacks based on the cards in the list
-        public static List<Stack> Stacks(List<string> Cards)
+        public static List<Stack> Stacks(List<Card> Cards)
         {
-            Cards.BasicStacks();
+            Cards.AddRange(Card.BasicCards());
 
             List<Stack> Stacks = new List<Stack>();
 
-            foreach (string card in Cards)
+            foreach (Card card in Cards)
             {
                 Stacks.Add(new Stack { Cards = AddCards(card) });
             }
@@ -25,7 +25,7 @@ namespace Dominion
         }
 
         // Method to add cards to a stack based on the card as input
-        public static List<string> AddCards(string Card)
+        public static List<Card> AddCards(Card Card)
         {
             int i = BasicSet.CardsAmount(Card);
             List<string> cards = new List<string>();
@@ -42,7 +42,7 @@ namespace Dominion
         // Instance constructor
         public Stack() { }
 
-        public Stack(string Card)
+        public Stack(Card Card)
         {
             Cards = AddCards(Card);
         }
