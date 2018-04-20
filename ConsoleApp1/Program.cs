@@ -48,6 +48,10 @@ namespace Dominion
 
                 // Action turn
                 Players.ActionTurn(i);
+                Players.BuyTurn(i);
+
+                // Check if piles are empty for ending the game
+                // update victory points
 
                 i++;
             } while (i < Player.NumOfPlayers);

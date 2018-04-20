@@ -32,7 +32,7 @@ namespace Dominion
                 
                 if (ActionCards.Count == 0)
                 {
-                    i = 0;
+                    Players[Player].Actions = 0;
                     Console.WriteLine("\n");
                     Console.Write("No action card in hand. Press a key to go to buy phase");
                     Console.ReadKey();
@@ -43,13 +43,10 @@ namespace Dominion
                 Console.WriteLine("\n");
                 Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count);
                 int index = GetIndex(Players, Player);
-                Players.PlayCard(Player, index);
+                Players.PlayAction(Player, index);
 
             } while (Players[Player].Actions != 0);
-
-
-
-
+            
             Console.ReadKey();
         }
 
@@ -59,7 +56,7 @@ namespace Dominion
 
             try
             {
-                index = Convert.ToInt32(Console.ReadLine());
+                index = Convert.ToInt32(Console.ReadLine())-1;
                 Card card = Players[Player].Hand[index];
                 if (!(card.Type.Contains("Action")))
                 {
@@ -69,7 +66,12 @@ namespace Dominion
             catch
             {
                 Console.Clear();
-                Console.WriteLine("Enter a valid number between 1 and {0}");
+                foreach (Card card in Players[Player].Hand)
+                {
+                    Console.Write("{0}     ", card.Name);
+                }
+                Console.WriteLine();
+                Console.WriteLine("Enter a valid number between 1 and {0}", Players[Player].Hand.Count);
                 return GetIndex(Players, Player);
             }
             return index;

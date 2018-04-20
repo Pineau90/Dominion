@@ -19,6 +19,7 @@ namespace Dominion
         public int VictoryPoints { get; set; }
         public int Actions { get; set; }
         public int Buys { get; set; }
+        public int Gold { get; set; }
                 
         // Method to set the cards in the startdeck
         public static List<Card> StartDeck()
@@ -32,7 +33,7 @@ namespace Dominion
 
             for (int i = 1; i <= 3; i++)
             {
-                Cards.Add(new Card { Name = "Estate", Type = new List<string>(new string[]{ "Victory" }), Price = 2, VicotryPoints = 1 });
+                Cards.Add(new Card { Name = "Estate", Type = new List<string>(new string[] { "Victory" }), Price = 2, VicotryPoints = 1 });
             }
 
             Cards.ShuffleCards();
@@ -70,7 +71,7 @@ namespace Dominion
 
             for (int i = 1; i <= NumOfPlayers; i++)
             {
-                Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<Card>(), DiscardPile = new List<Card>(), InPlay = new List<Card>(), VictoryPoints = 0, Actions = 0, Buys = 0 });
+                Players.Add(new Player { Name = SetPlayerName(i), DrawPile = StartDeck(), Hand = new List<Card>(), DiscardPile = new List<Card>(), InPlay = new List<Card>(), VictoryPoints = 0, Actions = 0, Buys = 0, Gold = 0 });
                 Console.Write("Creating player{0}: {1}", i, Players[i-1].Name);
                 System.Threading.Thread.Sleep(500);
                 Console.Write(".");
