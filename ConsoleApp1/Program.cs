@@ -19,13 +19,16 @@ namespace Dominion
             // Select 10 kingdom cards
             List<Card> Cards = Card.BasicKingdom();
             Cards.ShuffleCards();
-            Console.WriteLine("Shuffling cards...");
-            System.Threading.Thread.Sleep(3000);
-            Console.Clear();
-
+            Console.Write("Shuffling cards");
+            System.Threading.Thread.Sleep(500);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(500);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(500);
+            Console.Write(".");
+            System.Threading.Thread.Sleep(500);
+            Console.Clear();         
             Cards = Cards.GetRange(0, 10);
-
-            
             
             // Set a list of stacks to play with
             List<Stack> Stacks = Stack.Stacks(Cards);
@@ -44,22 +47,10 @@ namespace Dominion
                 Console.WriteLine("{0}'s turn", Players[i].Name);
 
                 // Action turn
-                Console.WriteLine();
-                Console.WriteLine("Cards in your hand:");
-                foreach (Card card in Players[i].Hand)
-                {
-                    Console.WriteLine(card.Name);
-                }
-                // Offer choice to play or not to play if applicable
-                Console.WriteLine();
-                Console.WriteLine("Cards in your drawpile");
-                foreach (Card card in Players[i].DrawPile)
-                {
-                    Console.WriteLine(card.Name);
-                }
-                Console.ReadKey();
+                Players.ActionTurn(i);
+
                 i++;
-            } while (i <= Player.NumOfPlayers - 1);
+            } while (i < Player.NumOfPlayers);
 
             Console.Clear();
 
