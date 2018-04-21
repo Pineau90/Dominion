@@ -7,27 +7,24 @@ namespace Dominion
 {
     public static class Buyturn
     {
-        public static void BuyTurn(this List<Player> Players, int Player)
+        public static void BuyTurn(this List<Player> Players, int Player, List<Stack> Stacks)
         {
             do
             {
                 Console.WriteLine();
                 Console.WriteLine("Cards in your hand:");
-                foreach (Card card in Players[Player].Hand)
-                {
-                    Console.Write("{0}     ", card.Name);
-                }
+                Players[Player].ShowHand();
 
-                List<Card> TreasureCards = new List<Card>();
+                int TreasureCards = 0;
                 foreach (Card card in Players[Player].Hand)
                 {
                     if (card.Type.Contains("Treasure"))
                     {
-                        TreasureCards.Add(card);
+                        TreasureCards++;
                     }
                 }
 
-                if (TreasureCards.Count == 0 && Players[Player].Gold == 0)
+                if (TreasureCards == 0 && Players[Player].Gold == 0)
                 {
                     Players[Player].Buys = 0;
                     Console.WriteLine("\n");
@@ -39,27 +36,21 @@ namespace Dominion
                 
                 do
                 {
-                    Console.WriteLine("\n");
-                    Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count);
                     int index = GetTrIndex(Players, Player);
                     Players.PlayTreasure(Player, index);
 
-                    for (int i = 1; i <= TreasureCards.Count; i++)
-                    {
-                        TreasureCards.Remove(TreasureCards.First());
-                    }
-
+                    TreasureCards = 0;
                     foreach (Card card in Players[Player].Hand)
                     {
                         if (card.Type.Contains("Treasure"))
                         {
-                            TreasureCards.Add(card);
+                            TreasureCards++;
                         }
-                    }
-                    Console.WriteLine(TreasureCards.Count - 1);
+                    }                    
                 }
-                while (TreasureCards.Count != 0);
+                while (TreasureCards != 0);
 
+                // Buy cards has to be done
                 Players[Player].Buys--;
 
             }
@@ -70,24 +61,23 @@ namespace Dominion
         {
             int index;
 
+            Players[Player].ShowHand();
+            Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count);
+
             try
             {
                 index = Convert.ToInt32(Console.ReadLine())-1;
                 Card card = Players[Player].Hand[index];
                 if (!(card.Type.Contains("Treasure")))
                 {
-                    throw new Exception("No action card selected to play, select another card");
+                    throw new Exception("No treasure card selected. Select another card to play.");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Console.Clear();
-                foreach (Card card in Players[Player].Hand)
-                {
-                    Console.Write("{0}     ", card.Name);
-                }
-                Console.WriteLine();
-                Console.WriteLine("Enter a valid number between 1 and {0}", Players[Player].Hand.Count);
+                Console.WriteLine("\n{0}", ex.Message);
+                Console.WriteLine("Press key to continue");
+                Console.ReadKey();
                 return GetTrIndex(Players, Player);
             }
             return index;

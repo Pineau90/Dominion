@@ -47,21 +47,18 @@ namespace Dominion
                 Console.WriteLine("{0}'s turn", Players[i].Name);
 
                 // Action turn
-                Players.ActionTurn(i);
-                Players.BuyTurn(i);
+                Players.ActionTurn(i, Stacks);
+                Players.BuyTurn(i, Stacks);
 
                 // Check if piles are empty for ending the game
                 // update victory points
-
+                
+                Console.WriteLine(Players[i].Gold);
+                Console.ReadKey();
                 i++;
+
             } while (i < Player.NumOfPlayers);
 
-            Console.Clear();
-
-            foreach (Stack stack in Stacks)
-            {
-                Console.WriteLine(stack.Cards.First().Name + ": " + stack.Cards.Count);
-            }
             Console.ReadKey();
         }
     }    

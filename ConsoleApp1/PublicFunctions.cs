@@ -61,5 +61,16 @@ namespace Dominion
             }
             
         }
+
+        public static void ShowHand(this Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Cards in {0}'s hand: \n", player.Name);
+            foreach(Card card in player.Hand)
+            {
+                Console.Write("{0}     ", card.Name);
+            }
+            Console.WriteLine("\n");
+        }
     }
 }
