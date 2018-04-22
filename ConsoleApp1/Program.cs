@@ -37,12 +37,13 @@ namespace Dominion
             int i = 0;
             int Turn = 1;
 
+            for (int j = 0; j <= Player.NumOfPlayers; j++)
+            {
+                Players.DrawCards(5, j, "Hand");
+            }
+
             do
             {
-                if (Turn == 1)
-                {
-                    Players.DrawCards(5, i, "Hand");
-                }
                 Console.Clear();
                 Console.WriteLine("{0}'s turn", Players[i].Name);
 

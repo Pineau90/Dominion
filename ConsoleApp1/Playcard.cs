@@ -18,8 +18,10 @@ namespace Dominion
             switch (card.Name)
             {
                 case "Adventurer":
+
                     int AdventurerTreasure = 0;
                     Card AdventurerCard;
+
                     do
                     {
                         AdventurerCard = Players[Player].DrawPile.First();
@@ -36,8 +38,11 @@ namespace Dominion
                         }
                     }
                     while (AdventurerTreasure < 2);
+
                     break;
+
                 case "Artisan":
+
                     int Artisani = 0;
                     Card ArtisanCard;
                     List<int> ArtisanCards = new List<int>();
@@ -91,6 +96,7 @@ namespace Dominion
                     Console.WriteLine("\n");
 
                     ArtisanException = false;
+
                     do
                     {
                         try
@@ -113,9 +119,77 @@ namespace Dominion
 
                     }
                     while (ArtisanException == true);
+
                     break;
+
                 case "Bandit":
+
+                    Card BanditCard;
+                    int BanditIndex;
+                    List<int> BanditList = new List<int>();
+                    int Banditi = 0;
+                                        
+                    foreach (Stack BanditStack in Stacks)
+                    {
+                        if (BanditStack.Cards.First().Name == "Gold")
+                        {
+                            BanditIndex = Banditi;
+                        }
+                        Banditi++;
+                    }
+
+                    BanditCard = Stacks[Banditi].Cards.First();
+                    Stacks[Banditi].Cards.Remove(Stacks[Banditi].Cards.First());
+                    Players[Player].DiscardPile.Add(BanditCard);
+
+                    Banditi = 0;
+                    foreach (Player player in Players)
+                    {
+                        if (!(Banditi == Player))
+                        {
+                            BanditList.Add(Banditi);
+                        }
+                        Banditi++;
+                    }
+
+                    List<Card> ReactionCards = new List<Card>();
+                    bool BanditAttack = true;
+                    foreach (int i in BanditList)
+                    {
+                        foreach (Card BanditCard2 in Players[i].Hand)
+                        {
+                            if (BanditCard2.Type.Contains("Reaction"))
+                            {
+                                ReactionCards.Add(BanditCard2);
+                            }
+                        }
+
+                        if (!(ReactionCards.Count == 0))
+                        {
+                            BanditAttack = Reactionturn.PlayReaction(Players, i, Stacks);
+                        }
+
+                        if (BanditAttack == true)
+                        {
+                            for (int j = 0; j <= 2; j++)
+                            {
+                                BanditCard = Players[i].DrawPile.First();
+                                Players[i].DrawPile.Remove(Players[i].DrawPile.First());
+
+                                if (BanditCard.Type.Contains("Treasure") && !(BanditCard.Name == "Copper"))
+                                {
+                                    Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(BanditCard);
+                                }
+                                else
+                                {
+                                    Players[i].DiscardPile.Add(BanditCard);
+                                }
+                            }
+                        }
+                    }
+
                     break;
+
                 case "Bureaucrat":
                     break;
                 case "Cellar":
@@ -200,9 +274,77 @@ namespace Dominion
             
         }
 
-        public static void PlayReaction(this List<Player> Players, int Player, int Card)
+        public static bool PlayReaction(this List<Player> Players, int Player, int Card)
         {
+            bool NotCancelAttack = true;
+            Card card = Players[Player].Hand[Card];
 
+            switch (card.Name)
+            {
+                case "Moat":
+                    NotCancelAttack = false;
+                    break;
+            }
+
+            return NotCancelAttack;
+        }
+
+        public static int GetPlayerIndex(List<Player> Players, int Player)
+        {
+            int i = 0;
+            List<int> iList = new List<int>();
+            int PlayerIndex = 0;
+            bool PlayerException = true;
+
+            Console.WriteLine("Available players to select: \n");
+            foreach (Player player in Players)
+            {
+                if (!(i == Player))
+                {
+                    Console.WriteLine("{0}. {1}", i, player.Name);
+                    iList.Add(i);
+                }
+                i++;
+            }
+
+            do
+            {
+                try
+                {
+                    Console.Write("\nEnter the number in front of the Player you want to select: ");
+                    PlayerIndex = Convert.ToInt32(Console.Read());
+                    if (!(iList.Contains(PlayerIndex)))
+                    {
+                        throw new Exception("");
+                    }
+                    PlayerException = false;
+                }
+                catch
+                {
+                    Console.Write("Invalid entry, enter a valid number from the list: ");
+                }
+            }
+            while (PlayerException == true);
+
+            iList.Clear();
+            return PlayerIndex;
+        }
+
+        public static int GetStackIndex(List<Stack> Stacks, String StackName)
+        {
+            int i = 0;
+            int j = 0;
+
+            foreach (Stack stack in Stacks)
+            {
+                if (stack.Cards.First().Name == StackName)
+                {
+                    j = i;
+                }
+                i++;
+            }
+
+            return j;
         }
     }
 }
