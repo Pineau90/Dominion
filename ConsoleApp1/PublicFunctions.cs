@@ -11,33 +11,52 @@ namespace Dominion
         public static IList<Card> ShuffleCards(this IList<Card> Cards)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            int n = Cards.Count;
-            while (n > 1)
+            if (!Cards.Any())
             {
-                byte[] box = new byte[1];
-                do provider.GetBytes(box);
-                while (!(box[0] < n * (Byte.MaxValue / n)));
-                int k = (box[0] % n);
-                n--;
-                Card value = Cards[k];
-                Cards[k] = Cards[n];
-                Cards[n] = value;
+                int n = Cards.Count;
+                while (n > 1)
+                {
+                    byte[] box = new byte[1];
+                    do provider.GetBytes(box);
+                    while (!(box[0] < n * (Byte.MaxValue / n)));
+                    int k = (box[0] % n);
+                    n--;
+                    Card value = Cards[k];
+                    Cards[k] = Cards[n];
+                    Cards[n] = value;
+                }
             }
             return Cards;
         }
 
         public static void DrawCards(this List<Player> Players, int Amount, int Player, string Type)
         {
+            int drawpile = 0;
+            int discardpile = 0;
+
+            if (!Players[Player].DrawPile.Any())
+            {
+                foreach (Card i in Players[Player].DrawPile)
+                {
+                    drawpile++;
+                }
+            }
+
+            foreach (Card i in Players[Player].DiscardPile)
+            {
+                discardpile++;
+            }
+
             switch (Type)
             {
                 case "Hand":
-                    if (Amount > Players[Player].DrawPile.Count + Players[Player].DiscardPile.Count)
+                    if (Amount > drawpile + discardpile)
                     {
-                        Amount = Players[Player].DrawPile.Count + Players[Player].DiscardPile.Count;
+                        Amount = drawpile + discardpile;
                     }
                     for (int i = 1; i <= Amount; i++)
                     {
-                        if (Players[Player].DrawPile.Count == 0)
+                        if (drawpile == 0)
                         {
                             Players.DrawCards(i, Player, "DrawPile");
                         }
@@ -46,9 +65,9 @@ namespace Dominion
                     }
                     break;
                 case "DrawPile":
-                    if (Amount > Players[Player].DiscardPile.Count)
+                    if (Amount > discardpile)
                     {
-                        Amount = Players[Player].DiscardPile.Count;
+                        Amount = discardpile;
                     }
                     for (int i = 1; i <= Amount; i++)
                     {

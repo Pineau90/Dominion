@@ -35,7 +35,7 @@ namespace Dominion
             
             // Plays the game
             int i = 0;
-            int Turn = 1;
+            //int Turn = 1;
 
             for (int j = 0; j <= Player.NumOfPlayers; j++)
             {

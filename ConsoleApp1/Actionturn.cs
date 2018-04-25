@@ -30,7 +30,7 @@ namespace Dominion
                     }
                 }
                 
-                if (ActionCards.Count == 0)
+                if (!ActionCards.Any())
                 {
                     Players[Player].Actions = 0;
                     Console.WriteLine("\n");
@@ -41,7 +41,7 @@ namespace Dominion
                 }
 
                 Console.WriteLine("\n");
-                Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count);
+                Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count + 1);
                 int index = GetIndex(Players, Player);
                 Players.PlayAction(Player, index, Stacks);
 
@@ -55,7 +55,7 @@ namespace Dominion
             int index;
 
             Players[Player].ShowHand();
-            Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count);
+            Console.Write("Enter an index number between 1 and {0} of the card to play: ", Players[Player].Hand.Count + 1);
 
             try
             {

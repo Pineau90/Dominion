@@ -52,12 +52,12 @@ namespace Dominion
                     foreach (Stack stack in Stacks)
                     {
                         Artisani++;
-                        ArtisanCard = stack.Cards.First();                        
+                        ArtisanCard = stack.Cards.First();
                         if (stack.Cards.First().Price <= 5 && stack.Cards.First().Name != "Trash" && !(stack.Cards.First().Type.Contains("Curse")))
                         {
                             Console.Write("{0}: {1}     ", Artisani, ArtisanCard.Name);
                             ArtisanCards.Add(Artisani);
-                        }                        
+                        }
                     }
 
                     do
@@ -65,7 +65,7 @@ namespace Dominion
                         try
                         {
                             Console.Write("\nEnter the number in front of the card you want to add to your hand: ");
-                            ArtisanIndex = Convert.ToInt32(Console.Read())-1;
+                            ArtisanIndex = Convert.ToInt32(Console.Read()) - 1;
                             if (!(ArtisanCards.Contains(ArtisanIndex)))
                             {
                                 throw new Exception("");
@@ -102,7 +102,7 @@ namespace Dominion
                         try
                         {
                             Console.Write("\nEnter the number in front of the card to put on top of your deck:");
-                            ArtisanIndex = Convert.ToInt32(Console.Read())-1;
+                            ArtisanIndex = Convert.ToInt32(Console.Read()) - 1;
                             if (!(ArtisanCards.Contains(ArtisanIndex)))
                             {
                                 throw new Exception("");
@@ -128,7 +128,7 @@ namespace Dominion
                     int BanditIndex;
                     List<int> BanditList = new List<int>();
                     int Banditi = 0;
-                                        
+
                     foreach (Stack BanditStack in Stacks)
                     {
                         if (BanditStack.Cards.First().Name == "Gold")
@@ -156,15 +156,18 @@ namespace Dominion
                     bool BanditAttack = true;
                     foreach (int i in BanditList)
                     {
+                        int k = 0;
+
                         foreach (Card BanditCard2 in Players[i].Hand)
                         {
                             if (BanditCard2.Type.Contains("Reaction"))
                             {
                                 ReactionCards.Add(BanditCard2);
+                                k++;
                             }
-                        }
-
-                        if (!(ReactionCards.Count == 0))
+                        }                        
+                        
+                        if (k != 0)
                         {
                             BanditAttack = Reactionturn.PlayReaction(Players, i, Stacks);
                         }
@@ -191,59 +194,144 @@ namespace Dominion
                     break;
 
                 case "Bureaucrat":
+                    Card BureaucratCard;
+                    int Bureaucrati = 0;
+                    List<int> BureaucratIndex = new List<int>();
+                    bool BureaucratException;
+
+                    BureaucratCard = Stacks[GetStackIndex(Stacks, "Silver")].Cards.First();
+                    Stacks[GetStackIndex(Stacks, "Silver")].Cards.Remove(Stacks[GetStackIndex(Stacks, "Silver")].Cards.First());
+                    Players[Player].DrawPile.Insert(0, BureaucratCard);
+
+                    foreach(Player player in Players)
+                    {
+                        if (!(Bureaucrati == Player))
+                        {
+                            BureaucratIndex.Add(Bureaucrati);
+                        }
+                        Bureaucrati++;
+                    }
+
+                    foreach (int i in BureaucratIndex)
+                    {
+                        Bureaucrati = 0;
+                        foreach(Card BureaucratCard2 in Players[i].Hand)
+                        {
+                            if (BureaucratCard2.Type.Contains("Victory"))
+                            {
+                                Console.Write("{0}. {1}     ", Bureaucrati, BureaucratCard2.Name);
+                                Bureaucrati++;
+                            }
+                        }
+                        
+                        if (Bureaucrati == 0)
+                        {
+                            break;
+                        }
+
+                        Console.Write("\n\nEnter the number in front of the card you want to put on top of your deck: ");
+                        BureaucratException = true;
+                        do
+                        {
+                            try
+                            {
+                                Bureaucrati = Convert.ToInt32(Console.ReadLine());
+                                if (!(BureaucratIndex.Contains(Bureaucrati)))
+                                {
+                                    throw new Exception("");
+                                }
+                                BureaucratException = false;
+                                BureaucratCard = Players[i].Hand[Bureaucrati];
+                                Players[i].Hand.Remove(Players[i].Hand[Bureaucrati]);
+                                Players[i].DrawPile.Insert(0, BureaucratCard);
+                            }
+                            catch
+                            {
+                                Console.Write("\n\nEnter a valid number: ");
+                            }
+                        } while (BureaucratException == true);
+                    }
+
                     break;
+
                 case "Cellar":
                     break;
+
                 case "Chancellor":
                     break;
+
                 case "Chapel":
                     break;
+
                 case "Council Room":
                     break;
+
                 case "Feast":
                     break;
+
                 case "Festival":
                     break;
+
                 case "Harbringer":
                     break;
+
                 case "Laboratory":
                     break;
+
                 case "Library":
                     break;
+
                 case "Market":
                     break;
+
                 case "Merchant":
                     break;
+
                 case "Militia":
                     break;
+
                 case "Mine":
                     break;
+
                 case "Moat":
                     break;
+
                 case "Moneylender":
                     break;
+
                 case "Poacher":
                     break;
+
                 case "Remodel":
                     break;
+
                 case "Sentry":
                     break;
+
                 case "Smithy":
                     break;
+
                 case "Spy":
                     break;
+
                 case "Thief":
                     break;
+
                 case "Throne Room":
                     break;
+
                 case "Vassal":
                     break;
+
                 case "Village":
                     break;
+
                 case "Witch":
                     break;
+
                 case "Woodcutter":
                     break;
+
                 case "Workshop":
                     break;
             }
