@@ -34,14 +34,11 @@ namespace Dominion
             int drawpile = 0;
             int discardpile = 0;
 
-            if (!Players[Player].DrawPile.Any())
+            foreach (Card i in Players[Player].DrawPile)
             {
-                foreach (Card i in Players[Player].DrawPile)
-                {
-                    drawpile++;
-                }
+                drawpile++;
             }
-
+            
             foreach (Card i in Players[Player].DiscardPile)
             {
                 discardpile++;

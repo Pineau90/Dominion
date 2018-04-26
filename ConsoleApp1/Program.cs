@@ -37,7 +37,7 @@ namespace Dominion
             int i = 0;
             //int Turn = 1;
 
-            for (int j = 0; j <= Player.NumOfPlayers; j++)
+            for (int j = 0; j <= Player.NumOfPlayers - 1; j++)
             {
                 Players.DrawCards(5, j, "Hand");
             }

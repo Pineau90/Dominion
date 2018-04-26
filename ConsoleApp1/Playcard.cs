@@ -194,6 +194,7 @@ namespace Dominion
                     break;
 
                 case "Bureaucrat":
+
                     Card BureaucratCard;
                     int Bureaucrati = 0;
                     List<int> BureaucratIndex = new List<int>();
@@ -255,9 +256,87 @@ namespace Dominion
                     break;
 
                 case "Cellar":
+
+                    int Cellari = 0;
+                    int Cellarj = 0;
+                    bool CellarException = true;
+                    string CellarString;
+                    Card CellarCard;
+
+                    Players[Player].Actions++;
+
+                    for (Cellari = 0; Cellari <= Players[Player].Hand.Count; Cellari++)
+                    {
+                        CellarCard = Players[Player].Hand[Cellari];
+
+                        do
+                        {
+                            try
+                            {
+                                Console.Write("Do you want to discard {0} from your hand? (y/n): ", CellarCard.Name);
+                                CellarString = Console.ReadLine();
+                                
+                                if (CellarString == "y" || CellarString == "Y")
+                                {
+                                    Players[Player].DiscardPile.Add(CellarCard);
+                                    Players[Player].Hand.Remove(Players[Player].Hand[Cellari]);
+                                    Cellarj++;
+                                    CellarException = false;
+                                }
+                                else if (CellarString == "n" || CellarString == "N")
+                                {
+                                    CellarException = false;
+                                }
+                                else
+                                {
+                                    throw new Exception("");
+                                }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Pick y to discard the card or n to keep the card in your hand.\n");
+                            }
+                        } while (CellarException == true);
+                    }
+
+                    Players.DrawCards(Cellarj, Player, "Hand");
+
                     break;
 
                 case "Chancellor":
+
+                    string ChancellorString;
+                    bool ChancellorException = true;
+                    Players[Player].Gold += 2;
+
+                    do
+                    {
+                        try
+                        {
+                            Console.Write("Do you want to add your drawpile to your discard pile? (y/n): ");
+                            ChancellorString = Console.ReadLine();
+
+                            if (ChancellorString == "y" || ChancellorString == "Y")
+                            {
+                                Players[Player].DiscardPile.AddRange(Players[Player].DrawPile);
+                                Players[Player].DrawPile.Clear();
+                                ChancellorException = false;
+                            }
+                            else if (ChancellorString == "n" || ChancellorString == "N")
+                            {
+                                ChancellorException = false;
+                            }
+                            else
+                            {
+                                throw new Exception("");
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Enter y or n!");
+                        }
+                    } while (ChancellorException == true);
+                    
                     break;
 
                 case "Chapel":
