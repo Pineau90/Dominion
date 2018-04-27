@@ -340,21 +340,180 @@ namespace Dominion
                     break;
 
                 case "Chapel":
+
+                    int Chapeli;
+                    int ChapelIndex;
+                    bool ChapelException = true;
+                    string ChapelString;
+                    Card ChapelCard;
+
+                    for (Chapeli = 1; Chapeli <= 4; Chapeli++)
+                    {
+                        do
+                        {
+                            try
+                            {
+                                Players[Player].ShowHand();
+                                Console.Write("Do you want to trash a card from your hand? (y/n): ");
+                                ChapelString = Console.ReadLine();
+
+                                if (ChapelString == "y" || ChapelString == "Y")
+                                {
+                                    do
+                                    {
+                                        try
+                                        {
+                                            Console.Write("Enter the indexnumber of the card to trash: ");
+                                            ChapelIndex = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                                            ChapelCard = Players[Player].Hand[ChapelIndex];
+                                            Players[Player].Hand.Remove(Players[Player].Hand[ChapelIndex]);
+                                            Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(ChapelCard);
+                                            ChapelException = false;
+                                        }
+                                        catch
+                                        {
+                                            Console.WriteLine("Enter a valid number.");
+                                        }
+                                    } while (ChapelException == true);
+                                }
+                                else if (ChapelString == "n" || ChapelString == "N")
+                                {
+                                    ChapelException = false;
+                                }
+                                else
+                                {
+                                    throw new Exception("");
+                                }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Enter y or n.");
+                            }
+
+                        } while (ChapelException == true);
+                    }
+
                     break;
 
                 case "Council Room":
+
+                    Players.DrawCards(4, Player, "Hand");
+                    Players[Player].Buys++;
+
+                    for (int i = 0; i <= Players.Count() - 1; i++)
+                    {
+                        if (i != Player)
+                        {
+                            Players.DrawCards(1, i, "Hand");
+                        }
+                    }
+
                     break;
 
                 case "Feast":
+
+                    int Feasti = 0;
+                    List<int> FeastCards = new List<int>();
+                    Card FeastCard;
+                    int FeastIndex = 0;
+                    bool FeastException = true;
+
+                    Players[Player].InPlay.Remove(card);
+                    Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(card);
+
+                    foreach (Stack stack in Stacks)
+                    {
+                        Feasti++;
+                        FeastCard = stack.Cards.First();
+                        if (stack.Cards.First().Price <= 5 && stack.Cards.First().Name != "Trash" && !(stack.Cards.First().Type.Contains("Curse")))
+                        {
+                            Console.Write("{0}: {1}     ", Feasti, FeastCard.Name);
+                            FeastCards.Add(Feasti);
+                        }
+                    }
+
+                    do
+                    {
+                        try
+                        {
+                            Console.Write("\nEnter the number in front of the card you want to add to your discardpile: ");
+                            FeastIndex = Convert.ToInt32(Console.Read()) - 1;
+                            if (!(FeastCards.Contains(FeastIndex)))
+                            {
+                                throw new Exception("");
+                            }
+                            FeastCard = Stacks[Feasti].Cards.First();
+                            Stacks[Feasti].Cards.Remove(Stacks[Feasti].Cards.First());
+                            Players[Player].DiscardPile.Add(FeastCard);
+                            FeastException = false;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid entry, enter a number from the list.");
+                        }
+                    }
+                    while (FeastException == true);
+
                     break;
 
                 case "Festival":
+
+                    Players[Player].Actions += 2;
+                    Players[Player].Buys++;
+                    Players[Player].Gold += 2;
+
                     break;
 
                 case "Harbringer":
+
+                    bool HarbringerException = true;
+                    int Harbringeri = 0;
+                    List<int> HarbringerIndex = new List<int>();
+                    Card HarbringerCard;
+
+                    Players.DrawCards(1, Player, "Hand");
+                    Players[Player].Actions++;
+                    
+                    foreach (Card HarbringerCard2 in Players[Player].DiscardPile)
+                    {
+                        Console.Write("{0}. {1}     ", Harbringeri, HarbringerCard2.Name);
+                        HarbringerIndex.Add(Harbringeri);
+                        Harbringeri++;
+                    }
+
+                    do
+                    {
+                        try
+                        {
+                            Console.Write("\nEnter the number of card you want to put from your discardpile to the top of your deck: ");
+                            Harbringeri = Convert.ToInt32(Console.ReadLine());
+                            if (HarbringerIndex.Contains(Harbringeri))
+                            {
+                                HarbringerCard = Players[Player].DiscardPile[Harbringeri];
+                                Players[Player].DiscardPile.Remove(Players[Player].DiscardPile[Harbringeri]);
+                                Players[Player].DrawPile.Insert(0, HarbringerCard);
+                                HarbringerException = false;
+                            }
+                            else
+                            {
+                                throw new Exception("");
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid entry, enter a valid indexnumber.");
+                        }
+
+                    } while (HarbringerException == true);
+
                     break;
 
                 case "Laboratory":
+
+                    Players.DrawCards(2, Player, "Hand");
+                    Players[Player].Actions++;
+
                     break;
 
                 case "Library":
