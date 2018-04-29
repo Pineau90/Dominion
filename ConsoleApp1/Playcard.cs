@@ -801,7 +801,62 @@ namespace Dominion
                     Players[Player].Actions++;
                     Players[Player].Gold++;
 
+                    int Poacheri = 0;
 
+                    foreach (Stack stack in Stacks)
+                    {
+                        if (stack.Cards.First().Name != "Trash")
+                        {
+                            if (stack.Cards.Any())
+                            {
+                                Poacheri++;
+                            }
+                        }
+                    }
+
+                    int Poacherj = 0;
+                    List<int> PoacherIndex = new List<int>();
+                    bool PoacherException = true;    
+                    
+                    do
+                    {
+                        if (!Players[Player].Hand.Any())
+                        {
+                            break;
+                        }
+
+                        Console.WriteLine("Select a card to discard from your hand:");
+
+                        foreach (Card PoacherCard in Players[Player].Hand)
+                        {
+                            Console.Write("{0}. {1}     ");
+                            PoacherIndex.Add(Poacherj);
+                            Poacherj++;
+                        }
+
+                        do
+                        {
+                            try
+                            {
+                                Poacherj = Convert.ToInt32(Console.Read());
+                                if (PoacherIndex.Contains(Poacherj))
+                                {
+                                    Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(Players[Player].Hand[Poacherj]);
+                                    Players[Player].Hand.Remove(Players[Player].Hand[Poacherj]);
+                                    PoacherException = false;
+                                }
+                                else
+                                {
+                                    throw new Exception("");
+                                }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Enter a valid indexnumber.");
+                            }
+                        } while (PoacherException == true);
+
+                    } while (Poacheri > 0);
 
                     break;
 
