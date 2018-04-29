@@ -748,22 +748,84 @@ namespace Dominion
 
                 case "Moneylender":
 
+                    bool MoneylenderException = true;
+                    int Moneylenderi = 0;
+                    List<int> MoneylenderIndex = new List<int>();
+
+                    foreach(Card MoneylenderCard2 in Players[Player].Hand)
+                    {
+                        if (MoneylenderCard2.Name == "Copper")
+                        {
+                            Console.Write("{0}. {1}     ");
+                            MoneylenderIndex.Add(Moneylenderi);
+                            Moneylenderi++;
+                        }
+                    }
+
+                    if (!MoneylenderIndex.Any())
+                    {
+                        break;
+                    }
+
+                    Console.Write("\nEnter the indexnumber of the copper card to discard: ");
+
+                    do
+                    {
+                        try
+                        {
+                            Moneylenderi = Convert.ToInt32(Console.Read());
+                            if (MoneylenderIndex.Contains(Moneylenderi))
+                            {
+                                Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(Players[Player].Hand[Moneylenderi]);
+                                Players[Player].Hand.Remove(Players[Player].Hand[Moneylenderi]);
+                                Players[Player].Gold += 3;
+                                MoneylenderException = false;
+                            }
+                            else
+                            {
+                                throw new Exception("");
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Enter a valid indexnumber");
+                        }
+
+                    } while (MoneylenderException == true);
 
                     break;
 
                 case "Poacher":
+
+                    Players.DrawCards(1, Player, "Hand");
+                    Players[Player].Actions++;
+                    Players[Player].Gold++;
+
+
+
                     break;
 
                 case "Remodel":
                     break;
 
                 case "Sentry":
+
+                    Players.DrawCards(1, Player, "Hand");
+                    Players[Player].Actions++;
+
                     break;
 
                 case "Smithy":
+
+                    Players.DrawCards(3, Player, "Hand");
+
                     break;
 
                 case "Spy":
+
+                    Players.DrawCards(1, Player, "Hand");
+                    Players[Player].Actions++;
+
                     break;
 
                 case "Thief":
@@ -773,15 +835,29 @@ namespace Dominion
                     break;
 
                 case "Vassal":
+
+                    Players[Player].Gold += 2;
+
                     break;
 
                 case "Village":
+
+                    Players.DrawCards(1, Player, "Hand");
+                    Players[Player].Actions += 2;
+
                     break;
 
                 case "Witch":
+
+                    Players.DrawCards(2, Player, "Hand");
+
                     break;
 
                 case "Woodcutter":
+
+                    Players[Player].Buys++;
+                    Players[Player].Gold += 2;
+
                     break;
 
                 case "Workshop":
