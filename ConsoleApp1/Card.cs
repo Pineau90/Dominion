@@ -11,19 +11,17 @@ namespace Dominion
         public List<string> Type { get; set; }
         public int Price { get; set; }
         public int VicotryPoints { get; set; }
-
-        // Method to return amount of cards
-
+                
         // Method to create BasicCards
         public static List<Card> BasicCards()
         {
             List<Card> Cards = new List<Card>();
 
-            Cards.Add(new Card { Name = "Copper", Type = new List<string>(new string[] { "Treasure" }), Price = 0, VicotryPoints = 0});
-            Cards.Add(new Card { Name = "Silver", Type = new List<string>(new string[] { "Treasure" }), Price = 3, VicotryPoints = 0});
-            Cards.Add(new Card { Name = "Gold", Type = new List<string>(new string[] { "Treasure" }), Price = 6, VicotryPoints = 0});
+            Cards.Add(new Card { Name = "Copper", Type = new List<string>(new string[] { "Treasure" }), Price = 0, VicotryPoints = 0 });
+            Cards.Add(new Card { Name = "Silver", Type = new List<string>(new string[] { "Treasure" }), Price = 3, VicotryPoints = 0 });
+            Cards.Add(new Card { Name = "Gold", Type = new List<string>(new string[] { "Treasure" }), Price = 6, VicotryPoints = 0 });
             Cards.Add(new Card { Name = "Trash", Type = new List<string>(new string[] { "Trash" }), Price = 0, VicotryPoints = 0 });
-            Cards.Add(new Card { Name = "Estate", Type = new List<string>(new string[] { "Victory"}), Price = 2, VicotryPoints = 1});
+            Cards.Add(new Card { Name = "Estate", Type = new List<string>(new string[] { "Victory" }), Price = 2, VicotryPoints = 1 });
             Cards.Add(new Card { Name = "Duchy", Type = new List<string>(new string[] { "Victory" }), Price = 5, VicotryPoints = 3 });
             Cards.Add(new Card { Name = "Province", Type = new List<string>(new string[] { "Victory" }), Price = 8, VicotryPoints = 6 });
             Cards.Add(new Card { Name = "Curse", Type = new List<string>(new string[] { "Victory", "Curse" }), Price = 0, VicotryPoints = -1 });
