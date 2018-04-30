@@ -88,5 +88,71 @@ namespace Dominion
             }
             Console.WriteLine("\n");
         }
+
+        /*
+        public static int GetCardIndex(this List<Player> Players, int Player, string pile, string type, string value, List<Stack> Stacks)
+        {
+            int ReturnIndex = 0;
+            int i = 0;
+            List<int> CardIndex = new List<int>();
+
+            i = 0;
+            ReturnIndex = 0;
+            CardIndex.Clear();
+
+            switch (pile)
+            {
+                case "Hand":
+                    foreach (Card card in Players[Player].Hand)
+                    {
+                        if (type == "Name")
+                        {
+                            if (card.Name == value)
+                            {
+                                Console.Write("{0}. {1}     ", i, card.Name);
+                                CardIndex.Add(i);
+                                i++;
+                            }
+                        }
+
+                        if (type == "Type")
+                        {
+                            if (card.Type.Contains(value))
+                            {
+                                Console.Write("{0}. {1}     ", i, card.Name);
+                                CardIndex.Add(i);
+                                i++;
+                            }
+                        }
+                    }
+                    break;
+                case "Stack":
+                    foreach (Stack stack in Stacks)
+                    {
+                        if (type == "Value")
+                        {
+                            if (card.Name == value)
+                            {
+                                Console.Write("{0}. {1}     ", i, card.Name);
+                                CardIndex.Add(i);
+                                i++;
+                            }
+                        }
+
+                        if (type == "Type")
+                        {
+                            if (card.Type.Contains(value))
+                            {
+                                Console.Write("{0}. {1}     ", i, card.Name);
+                                CardIndex.Add(i);
+                                i++;
+                            }
+                        }
+                    }
+                    break;
+            }
+            
+            return ReturnIndex;
+        } */
     }
 }

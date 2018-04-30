@@ -861,12 +861,176 @@ namespace Dominion
                     break;
 
                 case "Remodel":
+
+                    int Remodeli = 0;
+                    int Remodelj = 0;
+                    List<int> RemodelIndex = new List<int>();
+                    bool RemodelException = true;
+
+                    foreach (Card RemodelCard2 in Players[Player].Hand)
+                    {
+                        Console.Write("{0}. {1}     ", Remodeli, RemodelCard2.Name);
+                        RemodelIndex.Add(Remodeli);
+                        Remodeli++;
+                    }
+
+                    Remodeli = 0;
+                    Console.WriteLine("\nEnter an indexnumber of the card to discard:");
+                    do
+                    {
+                        try
+                        {
+                            Remodeli = Convert.ToInt32(Console.Read());
+                            if (RemodelIndex.Contains(Remodeli))
+                            {
+                                Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(Players[Player].Hand[Remodeli]);
+                                Remodelj = Players[Player].Hand[Remodeli].Price;
+                                Players[Player].Hand.Remove(Players[Player].Hand[Remodeli]);
+                                RemodelException = false;
+                            }
+                            else
+                            {
+                                throw new Exception("");
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Enter a valid indexnumber: ");
+                        }
+                    } while (RemodelException == true);
+
+                    Remodeli = 0;
+                    RemodelIndex.Clear();
+
+                    foreach (Stack stack in Stacks)
+                    {
+                        if (stack.Cards.First().Name != "Trash" && stack.Cards.First().Price <= (Remodelj += 2))
+                        {
+                            Console.Write("{0}. {1}     ", Remodeli, stack.Cards.First().Name);
+                            RemodelIndex.Add(Remodeli);
+                            Remodeli++;
+                        }
+                    }
+
+                    RemodelException = true;
+                    Remodeli = 0;
+                    Console.WriteLine("\nEnter an indexnumber of the card to gain: ");
+                    do
+                    {
+                        try
+                        {
+                            Remodeli = Convert.ToInt32(Console.Read());
+                            if (RemodelIndex.Contains(Remodeli))
+                            {
+                                Players[Player].DiscardPile.Add(Stacks[Remodeli].Cards.First());
+                                Stacks[Remodeli].Cards.Remove(Stacks[Remodeli].Cards.First());
+                                RemodelException = false;
+                            }
+                            else
+                            {
+                                throw new Exception("");
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Enter a valid indexnumber: ");
+                        }
+                    } while (RemodelException == true);
+                    
                     break;
 
                 case "Sentry":
 
                     Players.DrawCards(1, Player, "Hand");
                     Players[Player].Actions++;
+
+                    int Sentryj = 0;
+                    bool SentryException = true;
+                    List<Card> SentryCards = new List<Card>();
+
+                    for (int Sentryi = 0; Sentryi <= 1; Sentryi++)
+                    {
+                        Console.WriteLine("Do you want to 1. Trash     2. Discard     3. Put on deck     this card: {0}?", Players[Player].DrawPile.First().Name);
+                        do
+                        {
+                            try
+                            {
+                                Sentryj = Convert.ToInt32(Console.Read());
+                                if (Sentryj == 1)
+                                {
+                                    Stacks[GetStackIndex(Stacks, "Trash")].Cards.Add(Players[Player].DrawPile.First());
+                                    Players[Player].DrawPile.Remove(Players[Player].DrawPile.First());
+                                    SentryException = false;
+                                }
+                                else if (Sentryj == 2)
+                                {
+                                    Players[Player].DiscardPile.Add(Players[Player].DrawPile.First());
+                                    Players[Player].DrawPile.Remove(Players[Player].DrawPile.First());
+                                    SentryException = false;
+                                }
+                                else if (Sentryj == 3)
+                                {
+                                    SentryCards.Add(Players[Player].DrawPile.First());
+                                    Players[Player].DrawPile.Remove(Players[Player].DrawPile.First());
+                                    SentryException = false;
+                                }
+                                else
+                                {
+                                    throw new Exception("");
+                                }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Enter a valid number: ");
+                            }
+                        } while (SentryException == true);
+                    }
+
+                    Sentryj = 0;
+                    List<int> SentryIndex = new List<int>();
+
+                    if (SentryCards.Any())
+                    {
+                        if (SentryCards.Count == 1)
+                        {
+                            Players[Player].DrawPile.Insert(0, SentryCards.First());
+                            SentryCards.Clear();
+                        }
+                        else
+                        {
+                            foreach (Card SentryCard in SentryCards)
+                            {
+                                Console.Write("{0}. {1}     ", Sentryj, SentryCard.Name);
+                                SentryIndex.Add(Sentryj);
+                                Sentryj++;
+                            }
+
+                            Console.WriteLine("Pick a card to put on top of the deck, the other one goes second from top.");
+                            do
+                            {
+                                try
+                                {
+                                    Sentryj = Convert.ToInt32(Console.Read());
+                                    if (SentryIndex.Contains(Sentryj))
+                                    {
+                                        Players[Player].DrawPile.Insert(0, SentryCards[Sentryj]);
+                                        SentryCards.Remove(SentryCards[Sentryj]);
+                                        Players[Player].DrawPile.Insert(1, SentryCards.First());
+                                        SentryCards.Clear();
+                                        SentryException = false;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("");
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Enter a valid number");
+                                }
+                            } while (SentryException == true);
+                        }
+                    }
 
                     break;
 
@@ -880,6 +1044,43 @@ namespace Dominion
 
                     Players.DrawCards(1, Player, "Hand");
                     Players[Player].Actions++;
+
+                    bool SpyException = true;
+                    int Spyi = 0;
+                    int Spyj = 0;
+
+                    foreach (Player player in Players)
+                    {
+                        Console.WriteLine("What to do with {0}?\n1. Discard     2. Put on deck    : ", player.DrawPile.First().Name);
+
+                        do
+                        {
+                            try
+                            {
+                                Spyi = Convert.ToInt32(Console.Read());
+                                if (Spyi == 1)
+                                {
+                                    player.DiscardPile.Add(player.DrawPile.First());
+                                    player.DrawPile.RemoveAt(0);
+                                    SpyException = false;
+                                }
+                                else if (Spyi == 2)
+                                {
+                                    SpyException = false;
+                                }
+                                else
+                                {
+                                    throw new Exception("");
+                                }
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Enter a valid number as option: ");
+                            }
+                        } while (SpyException == true);
+
+                        Spyj++;
+                    }
 
                     break;
 
